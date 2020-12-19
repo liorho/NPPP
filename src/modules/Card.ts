@@ -1,4 +1,4 @@
-import { Sides } from './types';
+import { Sides } from '../utils/types';
 
 export default class Card {
   sides: Sides;

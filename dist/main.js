@@ -1,11 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var loadCardQueue_1 = require("./loadCardQueue");
-var Board_1 = require("./Board");
-var b = new Board_1.Board();
-// cardsQueue.console()
-console.log(loadCardQueue_1.cardsQueue.queue[0]);
-loadCardQueue_1.cardsQueue.queue[0].rotateRight();
-console.log(loadCardQueue_1.cardsQueue.queue[0]);
-// cardsQueue.queue.forEach(c=> console.log(c))
+var initGame_1 = require("./modules/initGame");
+var Game_1 = require("./modules/Game");
+var game = new Game_1.default();
+var count = 0;
+function solvePuzzle() {
+    game.placeCardOnBoard();
+    game.placeCardOnBoard();
+    if (game.isGameOver(count)) {
+        return initGame_1.board.consoleBoard();
+    }
+    else {
+        count++;
+        solvePuzzle();
+    }
+}
+solvePuzzle();
 //# sourceMappingURL=main.js.map

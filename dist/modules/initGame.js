@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cardsQueue = void 0;
-var CardsQueue_js_1 = require("./modules/CardsQueue.js");
-var Card_1 = require("./modules/Card");
+exports.cardsQueue = exports.board = void 0;
+var CardsQueue_js_1 = require("./CardsQueue.js");
+var Card_1 = require("./Card");
+var Board_1 = require("./Board");
+// INIT BOARD
+exports.board = new Board_1.default();
+exports.board.initBoard();
+// INIT CARDS QUEUE
 exports.cardsQueue = new CardsQueue_js_1.default();
 exports.cardsQueue.addCard(new Card_1.default(1, {
     north: { type: 'blue', part: 'head' },
@@ -58,4 +63,4 @@ exports.cardsQueue.addCard(new Card_1.default(9, {
     south: { type: 'green', part: 'tail' },
     west: { type: 'purple', part: 'tail' },
 }));
-//# sourceMappingURL=loadCardQueue.js.map
+//# sourceMappingURL=initGame.js.map

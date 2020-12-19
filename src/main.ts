@@ -1,10 +1,16 @@
-import { cardsQueue } from './loadCardQueue';
-import { Board } from './Board';
+import { cardsQueue, board } from './modules/initGame';
+import Game from './modules/Game';
 
-let b = new Board();
-// cardsQueue.console()
-console.log(cardsQueue.queue[0])
-cardsQueue.queue[0].rotateRight()
-console.log(cardsQueue.queue[0])
+const game = new Game();
 
-// cardsQueue.queue.forEach(c=> console.log(c))
+function solvePuzzle() {
+  game.placeCardOnBoard();
+  game.placeCardOnBoard();
+  if (game.isGameOver()) {
+    return board.consoleBoard();
+  } else {
+    solvePuzzle();
+  }
+}
+
+solvePuzzle();

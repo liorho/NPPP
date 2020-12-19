@@ -1,4 +1,4 @@
-import Card from './Card'
+import Card from '../modules/Card'
 
 // Declare CONSTS
 type TYPES = 'green' | 'purple' | 'blue' | 'pink'
@@ -18,4 +18,4 @@ export type Sides = {
   west: Side;
 };
 
-export type BOARD = [(Card | null)[], (Card | null)[], (Card | null)[]]
+export type BOARD = [(Card | undefined)[], (Card | undefined)[], (Card | undefined)[]]
