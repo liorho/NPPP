@@ -1,3 +1,10 @@
-import { cardsQueue } from './createCardQueue';
+import { cardsQueue } from './loadCardQueue';
+import { Board } from './Board';
 
-console.log(cardsQueue.queue[0]._id)
+let b = new Board();
+// cardsQueue.console()
+console.log(cardsQueue.queue[0])
+cardsQueue.queue[0].rotateRight()
+console.log(cardsQueue.queue[0])
+
+// cardsQueue.queue.forEach(c=> console.log(c))

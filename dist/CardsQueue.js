@@ -13,6 +13,9 @@ var CardsQueue = /** @class */ (function () {
     CardsQueue.prototype.isQueueEmpty = function () {
         return !this.queue.length;
     };
+    CardsQueue.prototype.console = function () {
+        console.log(this.queue);
+    };
     return CardsQueue;
 }());
 exports.default = CardsQueue;

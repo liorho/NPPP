@@ -19,4 +19,8 @@ export default class CardsQueue {
     return !this.queue.length
   }
 
+  console() {
+    console.log(this.queue)
+  }
+
 }

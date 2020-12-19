@@ -5,6 +5,15 @@ var Card = /** @class */ (function () {
         this._id = id;
         this.sides = sides;
     }
+    Card.prototype.rotateRight = function () {
+        var newNorth = this.sides.west;
+        this.sides = {
+            north: newNorth,
+            east: this.sides.north,
+            south: this.sides.east,
+            west: this.sides.south,
+        };
+    };
     return Card;
 }());
 exports.default = Card;
