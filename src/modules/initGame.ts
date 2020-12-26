@@ -3,8 +3,8 @@ import Card from './Card';
 import Board from './Board';
 
 // INIT BOARD
-export const board = new Board()
-board.initBoard()
+export const board = new Board();
+board.initBoard();
 
 // INIT CARDS QUEUE
 export const cardsQueue = new CardsQueue();

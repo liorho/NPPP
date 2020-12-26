@@ -1,8 +1,8 @@
-import Card from '../modules/Card'
+import Card from '../modules/Card';
 
 // Declare CONSTS
-type TYPES = 'green' | 'purple' | 'blue' | 'pink'
-type PARTS = 'head' | 'tail'
+type TYPES = 'green' | 'purple' | 'blue' | 'pink';
+type PARTS = 'head' | 'tail';
 
 // Side of each card
 export type Side = {
@@ -18,4 +18,6 @@ export type Sides = {
   west: Side;
 };
 
-export type BOARD = [(Card | undefined)[], (Card | undefined)[], (Card | undefined)[]]
+export type BOARD = [(Card | undefined)[], (Card | undefined)[], (Card | undefined)[]];
+
+export type Coordinate = { x: number; y: number };

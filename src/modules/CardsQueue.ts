@@ -1,26 +1,45 @@
-import Card from "./Card"
+import Card from './Card';
 
 export default class CardsQueue {
-  queue: Card[]
+  queue: Card[];
+  lastLength: number;
+  roundCounter: number;
+  lengthAfterGetCard: number;
 
   constructor() {
-    this.queue = []
+    this.queue = [];
+    this.lengthAfterGetCard = 0;
+    this.lastLength = 0;
+    this.roundCounter = 0;
   }
 
-  addCard(card: Card): void{
-    this.queue.unshift(card)
+  addCard(card: Card): void {
+    // tracking number of rounds which the queue's length haven't changed
+    if (this.queue.length === this.lengthAfterGetCard) this.roundCounter++;
+    card._rotateCount = 0;
+    this.queue.push(card);
   }
 
   getCard(): Card {
-    return this.queue.splice(0, 1)[0]
+    this.lengthAfterGetCard = this.queue.length - 1;
+    return this.queue.splice(0, 1)[0];
   }
 
   isQueueEmpty(): boolean {
-    return !this.queue.length
+    return !this.queue.length;
   }
 
-  console() {
-    console.log(this.queue)
+  console(): void {
+    console.log(this.queue);
   }
 
+  isRepeat(): boolean {
+    if (this.roundCounter > this.queue.length) {
+      this.roundCounter = 0
+      return true
+    } else {
+
+      return false;
+    }
+  }
 }
