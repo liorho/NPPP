@@ -1,30 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var CardsQueue = /** @class */ (function () {
-    function CardsQueue() {
+class CardsQueue {
+    constructor() {
         this.queue = [];
         this.lengthAfterGetCard = 0;
         this.lastLength = 0;
         this.roundCounter = 0;
     }
-    CardsQueue.prototype.addCard = function (card) {
+    addCard(card) {
         // tracking number of rounds which the queue's length haven't changed
         if (this.queue.length === this.lengthAfterGetCard)
             this.roundCounter++;
         card._rotateCount = 0;
         this.queue.push(card);
-    };
-    CardsQueue.prototype.getCard = function () {
+    }
+    getQueueSize() {
+        return this.queue.length;
+    }
+    getCard() {
         this.lengthAfterGetCard = this.queue.length - 1;
         return this.queue.splice(0, 1)[0];
-    };
-    CardsQueue.prototype.isQueueEmpty = function () {
+    }
+    getCardById(id) {
+        return this.queue.find(c => c.id === id);
+    }
+    isQueueEmpty() {
         return !this.queue.length;
-    };
-    CardsQueue.prototype.console = function () {
+    }
+    console() {
         console.log(this.queue);
-    };
-    CardsQueue.prototype.isRepeat = function () {
+    }
+    isRepeat() {
         if (this.roundCounter > this.queue.length) {
             this.roundCounter = 0;
             return true;
@@ -32,8 +38,7 @@ var CardsQueue = /** @class */ (function () {
         else {
             return false;
         }
-    };
-    return CardsQueue;
-}());
+    }
+}
 exports.default = CardsQueue;
 //# sourceMappingURL=CardsQueue.js.map

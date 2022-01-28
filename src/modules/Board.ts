@@ -26,12 +26,37 @@ export default class Board {
     });
   }
 
-  placeCard(card: Card) {
-    this.loopBoard((x: number, y: number) => {
-      if (!this.board[y][x]) {
-        return (this.board[y][x] = card);
-      }
-    });
+  placeCard({ x, y }: Coordinate, card: Card): void {
+    this.board[y][x] = card;
+  }
+
+  isSquareEmpty({ x, y }: Coordinate): boolean {
+    return !this.board[y][x];
+  }
+
+  isCard(c: any): c is Card {
+    return c ? 'id' in c : false;
+  }
+  isCardOnBoard(card: Card): boolean {
+    return this.board.some((cardRow) =>
+      cardRow.some((c) => {
+        if (this.isCard(c)) {
+          return c.id === card.id;
+        } else {
+          return false;
+        }
+      })
+    );
+
+    // return this.board.some(c => {
+    //   if (this.isCard(c)) {
+    //     return c.id === card.id
+    //   }
+    // })
+  }
+
+  isCardInBoardByPos({ x, y }: Coordinate, card: Card): boolean {
+    return this.board[y][x]?.id === card.id || this.board[y][x]?.pos === card.pos;
   }
 
   consoleBoard(x?: number, y?: number) {

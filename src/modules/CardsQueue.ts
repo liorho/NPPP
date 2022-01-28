@@ -20,9 +20,17 @@ export default class CardsQueue {
     this.queue.push(card);
   }
 
+  getQueueSize(): number{
+    return this.queue.length
+  }
+
   getCard(): Card {
     this.lengthAfterGetCard = this.queue.length - 1;
     return this.queue.splice(0, 1)[0];
+  }
+
+  getCardById(id:number): any {
+    return this.queue.find(c=> c.id === id)
   }
 
   isQueueEmpty(): boolean {

@@ -1,4 +1,4 @@
-import CardsQueue from './CardsQueue.js';
+import CardsQueue from './CardsQueue';
 import Card from './Card';
 import Board from './Board';
 

@@ -1,50 +1,46 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var initGame_1 = require("./initGame");
-var Game = /** @class */ (function () {
-    function Game() {
+const consts_1 = require("./../utils/consts");
+const initGame_1 = require("./initGame");
+class Game {
+    placeCardOnBoard(square, card, pos) {
+        initGame_1.board.placeCard(square, initGame_1.cardsQueue.getCard());
     }
-    Game.prototype.placeCardOnBoard = function () {
-        initGame_1.board.placeCard(initGame_1.cardsQueue.getCard());
-    };
-    Game.prototype.isGameOver = function () {
+    isGameOver() {
         // check if everything match
         if (initGame_1.board.isAllMatch()) {
             return initGame_1.board.isBoardFull() ? true : false;
         }
         return false;
-    };
-    Game.prototype.runGame = function () {
-        // if (this.isGameOver()) {
-        //   return true;
-        // }
-        if (initGame_1.board.isAllMatch()) {
-            if (initGame_1.board.isBoardFull()) {
-                return true;
+    }
+    runGame(board) {
+        if (board.isBoardFull()) {
+            if (board.isAllMatch()) {
+                return board;
             }
             else {
-                this.placeCardOnBoard();
-                return this.runGame();
+                return false;
             }
         }
         else {
-            if (initGame_1.board.isLastCardWasFullyRotated()) {
-                //            yes - return it to queue
-                initGame_1.board.returnCardToQueue();
-                if (initGame_1.cardsQueue.isRepeat()) {
-                    initGame_1.board.returnCardToQueue();
+            for (let y = 0; y < consts_1.BOARD_SIZE; y++) {
+                for (let x = 0; x < consts_1.BOARD_SIZE; x++) {
+                    for (let card_id = 1; card_id <= initGame_1.cardsQueue.getQueueSize(); card_id++) {
+                        const card = initGame_1.cardsQueue.getCardById(card_id);
+                        if (!board.isCardOnBoard(card)) {
+                            for (let pos = 0; pos <= consts_1.CARD_POS; pos++) {
+                                const XY = { x, y };
+                                if (board.isSquareEmpty(XY) || !board.isCardInBoardByPos(XY, card)) {
+                                    board.placeCard(XY, card);
+                                    return this.runGame(board);
+                                }
+                            }
+                        }
+                    }
                 }
-                this.placeCardOnBoard();
-                return this.runGame();
-            }
-            else {
-                //            no - rotate the card O(then check again)
-                initGame_1.board.rotateLastCard();
-                return this.runGame();
             }
         }
-    };
-    return Game;
-}());
+    }
+}
 exports.default = Game;
 //# sourceMappingURL=Game.js.map

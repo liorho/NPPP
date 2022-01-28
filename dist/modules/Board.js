@@ -1,58 +1,76 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var consts_1 = require("./../utils/consts");
-var initGame_1 = require("./initGame");
-var Board = /** @class */ (function () {
-    function Board() {
+const consts_1 = require("./../utils/consts");
+const initGame_1 = require("./initGame");
+class Board {
+    constructor() {
         this.board = [new Array(), new Array(), new Array()];
     }
-    Board.prototype.loopBoard = function (func) {
-        for (var y = 0; y < consts_1.BOARD_SIZE; y++) {
-            for (var x = 0; x < consts_1.BOARD_SIZE; x++) {
+    loopBoard(func) {
+        for (let y = 0; y < consts_1.BOARD_SIZE; y++) {
+            for (let x = 0; x < consts_1.BOARD_SIZE; x++) {
                 if (func(x, y))
                     return;
             }
         }
-    };
-    Board.prototype.initBoard = function () {
-        var _this = this;
-        this.loopBoard(function (x, y) {
-            _this.board[y][x] = undefined;
+    }
+    initBoard() {
+        this.loopBoard((x, y) => {
+            this.board[y][x] = undefined;
         });
-    };
-    Board.prototype.placeCard = function (card) {
-        var _this = this;
-        this.loopBoard(function (x, y) {
-            if (!_this.board[y][x]) {
-                return (_this.board[y][x] = card);
+    }
+    placeCard({ x, y }, card) {
+        this.board[y][x] = card;
+    }
+    isSquareEmpty({ x, y }) {
+        return !this.board[y][x];
+    }
+    isCard(c) {
+        return c ? 'id' in c : false;
+    }
+    isCardOnBoard(card) {
+        return this.board.some((cardRow) => cardRow.some((c) => {
+            if (this.isCard(c)) {
+                return c.id === card.id;
             }
-        });
-    };
-    Board.prototype.consoleBoard = function (x, y) {
-        var _this = this;
+            else {
+                return false;
+            }
+        }));
+        // return this.board.some(c => {
+        //   if (this.isCard(c)) {
+        //     return c.id === card.id
+        //   }
+        // })
+    }
+    isCardInBoardByPos({ x, y }, card) {
+        var _a, _b;
+        return ((_a = this.board[y][x]) === null || _a === void 0 ? void 0 : _a.id) === card.id || ((_b = this.board[y][x]) === null || _b === void 0 ? void 0 : _b.pos) === card.pos;
+    }
+    consoleBoard(x, y) {
         if (x && y) {
             return console.log(this.board[y][x]);
         }
         else {
-            this.loopBoard(function (x, y) { return console.log(_this.board[y][x]); });
+            this.loopBoard((x, y) => console.log(this.board[y][x]));
         }
-    };
-    Board.prototype.isAllMatch = function () {
-        for (var y = 0; y < consts_1.BOARD_SIZE; y++) {
-            for (var x = 0; x < consts_1.BOARD_SIZE; x++) {
+    }
+    isAllMatch() {
+        for (let y = 0; y < consts_1.BOARD_SIZE; y++) {
+            for (let x = 0; x < consts_1.BOARD_SIZE; x++) {
                 if (!this.isMatch(x, y)) {
                     return false;
                 }
             }
         }
         return true;
-    };
-    Board.prototype.isMatch = function (x, y) {
-        var theCard = this.board[y][x];
-        var northCard = y > 0 ? this.board[y - 1][x] : undefined;
-        var eastCard = x < consts_1.BOARD_SIZE - 1 ? this.board[y][x + 1] : undefined;
-        var southCard = y < consts_1.BOARD_SIZE - 1 ? this.board[y + 1][x] : undefined;
-        var westCard = x > 0 ? this.board[y][x - 1] : undefined;
+    }
+    isMatch(x, y) {
+        const theCard = this.board[y][x];
+        const northCard = y > 0 ? this.board[y - 1][x] : undefined;
+        const eastCard = x < consts_1.BOARD_SIZE - 1 ? this.board[y][x + 1] : undefined;
+        const southCard = y < consts_1.BOARD_SIZE - 1 ? this.board[y + 1][x] : undefined;
+        const westCard = x > 0 ? this.board[y][x - 1] : undefined;
         if (theCard) {
             if (northCard) {
                 if (theCard.sides.north.part === northCard.sides.south.part || theCard.sides.north.type !== northCard.sides.south.type)
@@ -72,29 +90,29 @@ var Board = /** @class */ (function () {
             }
         }
         return true;
-    };
-    Board.prototype.isBoardFull = function () {
-        for (var y = 0; y < consts_1.BOARD_SIZE; y++) {
-            for (var x = 0; x < consts_1.BOARD_SIZE; x++) {
+    }
+    isBoardFull() {
+        for (let y = 0; y < consts_1.BOARD_SIZE; y++) {
+            for (let x = 0; x < consts_1.BOARD_SIZE; x++) {
                 if (!this.board[y][x])
                     return false;
             }
         }
         return true;
-    };
-    Board.prototype.getLastCardCoor = function () {
-        for (var y = 0; y < consts_1.BOARD_SIZE; y++) {
-            for (var x = 0; x < consts_1.BOARD_SIZE; x++) {
+    }
+    getLastCardCoor() {
+        for (let y = 0; y < consts_1.BOARD_SIZE; y++) {
+            for (let x = 0; x < consts_1.BOARD_SIZE; x++) {
                 if (!this.board[y][x]) {
                     return x === 0 ? { x: 2, y: y - 1 } : { x: x - 1, y: y };
                 }
             }
         }
         return { x: 2, y: 2 };
-    };
-    Board.prototype.isLastCardWasFullyRotated = function () {
-        var _a = this.getLastCardCoor(), x = _a.x, y = _a.y;
-        var lastCard = this.board[y][x];
+    }
+    isLastCardWasFullyRotated() {
+        const { x, y } = this.getLastCardCoor();
+        const lastCard = this.board[y][x];
         if (lastCard) {
             if (lastCard.isFullyRotated()) {
                 return true;
@@ -106,18 +124,17 @@ var Board = /** @class */ (function () {
         else {
             return false;
         }
-    };
-    Board.prototype.returnCardToQueue = function () {
-        var _a = this.getLastCardCoor(), x = _a.x, y = _a.y;
+    }
+    returnCardToQueue() {
+        const { x, y } = this.getLastCardCoor();
         initGame_1.cardsQueue.addCard(this.board[y][x]);
         this.board[y][x] = undefined;
-    };
-    Board.prototype.rotateLastCard = function () {
-        var _a = this.getLastCardCoor(), x = _a.x, y = _a.y;
-        var lastCard = this.board[y][x];
+    }
+    rotateLastCard() {
+        const { x, y } = this.getLastCardCoor();
+        const lastCard = this.board[y][x];
         lastCard === null || lastCard === void 0 ? void 0 : lastCard.rotateRight();
-    };
-    return Board;
-}());
+    }
+}
 exports.default = Board;
 //# sourceMappingURL=Board.js.map

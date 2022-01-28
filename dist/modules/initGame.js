@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cardsQueue = exports.board = void 0;
-var CardsQueue_js_1 = require("./CardsQueue.js");
-var Card_1 = require("./Card");
-var Board_1 = require("./Board");
+const CardsQueue_js_1 = require("./CardsQueue.js");
+const Card_1 = require("./Card");
+const Board_1 = require("./Board");
 // INIT BOARD
 exports.board = new Board_1.default();
 exports.board.initBoard();

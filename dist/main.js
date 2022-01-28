@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var initGame_1 = require("./modules/initGame");
-var Game_1 = require("./modules/Game");
-var game = new Game_1.default();
+const initGame_1 = require("./modules/initGame");
+const Game_1 = require("./modules/Game");
+const game = new Game_1.default();
 function solvePuzzle() {
-    var isGameSolved = game.runGame();
+    const isGameSolved = game.runGame(initGame_1.board);
+    console.log(isGameSolved);
     if (isGameSolved) {
         initGame_1.board.consoleBoard();
     }
